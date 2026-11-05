@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>以闪 · 套装特姿图鉴 · 盲盒版</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      /* 背景图与淡化处理 */
+      background-image: url('https://picui.ogmua.cn/s1/2026/11/05/6aec8cde85695.webp');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #2e2b2a;
+      position: relative;
+    }
+
+    /* 背景图的淡化遮罩层 */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(245, 242, 240, 0.75); /* 这里的 0.75 是淡化程度，可自行调整 */
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .app-container {
+      max-width: 1400px;
+      width: 100%;
+      /* 改为半透明背景 + 毛玻璃效果 */
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 2.5rem;
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1), 0 8px 24px -6px rgba(0, 0, 0, 0.05);
+      padding: 2rem 2rem 2.5rem;
+      position: relative;
+    }
+
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 1rem 1.5rem;
+    }
+
+    .title-section h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #1f1d1b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .title-section h1 span {
+      background: #ffd9c0;
+      border-radius: 40px;
+      padding: 0.2rem 1rem 0.3rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #8b5a3c;
+      letter-spacing: 0.01em;
+      margin-left: 0.4rem;
+    }
+
+    .subhead {
+      font-size: 0.95rem;
+      color: #77706b;
+      margin-top: 0.25rem;
+      font-weight: 400;
+    }
+
+    /* 系列切换 + 搜索 */
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 1.5rem;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .series-tabs {
+      display: flex;
+      background: rgba(245, 239, 234, 0.8);
+      border-radius: 60px;
+      padding: 0.3rem;
+      gap: 0.2rem;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+
+    .series-tab {
+      padding: 0.6rem 1.4rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #7a6e66;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .series-tab.active {
+      background: #ffffff;
+      color: #1f1d1b;
+      font-weight: 600;
+      box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.15);
+    }
+
+    .series-tab:hover:not(.active) {
+      background: rgba(237, 229, 223, 0.8);
+      color: #4a3f3a;
+    }
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .search-wrapper svg {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1.2rem;
+      height: 1.2rem;
+      stroke: #9b938c;
+      fill: none;
+      stroke-width: 2;
+      pointer-events: none;
+    }
+
+    .search-wrapper input {
+      width: 100%;
+      padding: 0.9rem 1.2rem 0.9rem 3rem;
+      font-family: inherit;
+      font-size: 1rem;
+      background: rgba(250, 248, 246, 0.8);
+      border: 1.5px solid rgba(237, 233, 229, 0.8);
+      border-radius: 3rem;
+      outline: none;
+      transition: all 0.2s;
+      color: #2e2b2a;
+      font-weight: 400;
+    }
+
+    .search-wrapper input:focus {
+      border-color: #d9b8a4;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 12px rgba(185, 143, 114, 0.15);
+    }
+
+    .search-wrapper input::placeholder {
+      color: #b7aea7;
+      font-weight: 400;
+    }
+
+    .dual-panel {
+      display: flex;
+      gap: 2rem;
+      margin-top: 0.5rem;
+      min-height: 500px;
+    }
+
+    /* 左侧列表透明化 */
+    .set-list-panel {
+      flex: 0 0 260px;
+      background: rgba(253, 251, 250, 0.6);
+      border-radius: 1.8rem;
+      padding: 0.8rem 0.6rem 0.8rem 0.8rem;
+      border: 1px solid rgba(240, 234, 229, 0.6);
+      max-height: 640px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #d9cdc4 transparent;
+    }
+
+    .set-list-panel::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .set-list-panel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .set-list-panel::-webkit-scrollbar-thumb {
+      background: #d9cdc4;
+      border-radius: 10px;
+    }
+
+    .set-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .set-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1rem;
+      border-radius: 1.2rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-weight: 500;
+      color: #4a423e;
+      border: 1.5px solid transparent;
+      background: transparent;
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+
+    .set-item:hover {
+      background: rgba(247, 239, 234, 0.7);
+      color: #2e2b2a;
+    }
+
+    .set-item.active {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: #e3cfc0;
+      box-shadow: 0 6px 14px -6px rgba(170, 130, 100, 0.15);
+      color: #1f1d1b;
+      font-weight: 600;
+    }
+
+    .set-item .set-badge {
+      background: rgba(237, 227, 219, 0.8);
+      color: #8b6b54;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.7rem;
+      border-radius: 30px;
+      letter-spacing: 0.01em;
+      transition: background 0.15s;
+    }
+
+    .set-item.active .set-badge {
+      background: #e8d5c8;
+      color: #6e4c36;
+    }
+
+    /* 右侧面板透明化 */
+    .thumb-panel {
+      flex: 1;
+      min-width: 0;
+      background: rgba(253, 251, 250, 0.6);
+      border-radius: 1.8rem;
+      padding: 1.2rem 1.2rem 1.5rem;
+      border: 1px solid rgba(240, 234, 229, 0.6);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .thumb-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding: 0 0.3rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .thumb-header h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #302b28;
+    }
+
+    .thumb-header h2 small {
+      font-weight: 400;
+      font-size: 0.85rem;
+      color: #978b83;
+      margin-left: 0.6rem;
+    }
+
+    .thumb-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .btn-paste {
+      background: rgba(242, 232, 226, 0.9);
+      border: 1px solid rgba(225, 210, 200, 0.8);
+      border-radius: 30px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #6e4c36;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-paste:hover {
+      background: rgba(232, 217, 207, 0.9);
+      border-color: #cbb9ab;
+    }
+
+    .thumb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      overflow-y: auto;
+      max-height: 520px;
+      padding: 0.2rem 0.2rem 0.6rem;
+      scrollbar-width: thin;
+      scrollbar-color: #d9cdc4 transparent;
+    }
+
+    .thumb-grid::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .thumb-grid::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .thumb-grid::-webkit-scrollbar-thumb {
+      background: #d9cdc4;
+      border-radius: 10px;
+    }
+
+    .thumb-card {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 1.2rem;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02), 0 2px 6px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(241, 235, 231, 0.8);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .thumb-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -12px rgba(120, 90, 70, 0.28), 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-color: #e1d2c8;
+      background: #ffffff;
+    }
+
+    .thumb-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.15s;
+      background: rgba(245, 239, 234, 0.5);
+    }
+
+    .thumb-card img.error {
+      opacity: 0.4;
+      background: #ede7e2;
+    }
+
+    .thumb-delete {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(2px);
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #8a6e5d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: background 0.15s, color 0.15s;
+      z-index: 5;
+    }
+
+    .thumb-delete:hover {
+      background: #ffdbd0;
+      color: #b33f2a;
+    }
+
+    /* 模态框 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 25, 22, 0.8);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1.5rem;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.22s ease, visibility 0.22s;
+    }
+
+    .modal-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-content {
+      max-width: min(90vw, 900px);
+      max-height: 85vh;
+      background: #ffffff;
+      border-radius: 2rem;
+      padding: 1rem 1rem 0.8rem;
+      box-shadow: 0 40px 70px -20px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      transform: scale(0.96);
+      transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 68vh;
+      width: auto;
+      height: auto;
+      border-radius: 1.2rem;
+      display: block;
+      object-fit: contain;
+      background: #f8f4f1;
+    }
+
+    .modal-caption {
+      margin-top: 0.9rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #3b3330;
+      text-align: center;
+      letter-spacing: -0.01em;
+      padding: 0 0.5rem;
+      word-break: break-word;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background: #ffffff;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      font-size: 1.5rem;
+      color: #4a3f3a;
+      transition: background 0.15s, transform 0.15s;
+      line-height: 1;
+      border: 1px solid #eee6e1;
+    }
+
+    .modal-close:hover {
+      background: #f7efea;
+      transform: scale(1.05);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: #8a7e77;
+      font-size: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .empty-state span {
+      font-size: 2rem;
+      opacity: 0.5;
+    }
+
+    /* 右下角提取链接按钮 */
+    .extract-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: rgba(46, 43, 42, 0.9);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      border: none;
+      border-radius: 60px;
+      padding: 0.9rem 1.8rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      z-index: 900;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .extract-btn:hover {
+      background: rgba(66, 61, 58, 0.95);
+      transform: scale(1.02);
+    }
+
+    .extract-btn:active {
+      transform: scale(0.98);
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 8rem;
+      right: 2rem;
+      background: rgba(59, 51, 48, 0.95);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      padding: 0.8rem 1.6rem;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.4);
+      z-index: 950;
+      opacity: 0;
+      transition: opacity 0.25s, transform 0.25s;
+      transform: translateY(8px);
+      pointer-events: none;
+      border-left: 4px solid #d9b8a4;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 粘贴图片弹窗 */
+    .paste-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 25, 22, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+      padding: 1.5rem;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+
+    .paste-modal-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .paste-modal {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 2rem;
+      padding: 1.8rem;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 40px 70px -20px rgba(0, 0, 0, 0.5);
+      transform: scale(0.96);
+      transition: transform 0.2s;
+    }
+
+    .paste-modal-overlay.show .paste-modal {
+      transform: scale(1);
+    }
+
+    .paste-modal h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: #1f1d1b;
+    }
+
+    .paste-modal p {
+      font-size: 0.9rem;
+      color: #7a6e66;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .paste-zone {
+      border: 2px dashed #d9cdc4;
+      border-radius: 1.4rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: #a79b94;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      min-height: 160px;
+      justify-content: center;
+      outline: none;
+      background: rgba(250, 248, 246, 0.6);
+    }
+
+    .paste-zone:focus,
+    .paste-zone:hover {
+      border-color: #d9b8a4;
+      background: rgba(253, 250, 248, 0.9);
+    }
+
+    .paste-zone.has-image {
+      border-color: #c3b2a5;
+      background: rgba(250, 245, 241, 0.9);
+    }
+
+    .paste-zone .paste-icon {
+      font-size: 2.2rem;
+      line-height: 1;
+    }
+
+    .paste-zone .paste-hint {
+      font-size: 0.85rem;
+      color: #b7aea7;
+    }
+
+    .paste-preview {
+      max-width: 100%;
+      max-height: 240px;
+      border-radius: 1rem;
+      object-fit: contain;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .paste-modal-actions {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: flex-end;
+      margin-top: 1.2rem;
+    }
+
+    .paste-modal-actions button {
+      padding: 0.7rem 1.5rem;
+      border-radius: 60px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: none;
+    }
+
+    .btn-cancel {
+      background: #f2ede9;
+      color: #6e5f56;
+    }
+
+    .btn-cancel:hover {
+      background: #e8ded7;
+    }
+
+    .btn-confirm {
+      background: #2e2b2a;
+      color: #ffffff;
+    }
+
+    .btn-confirm:hover {
+      background: #423d3a;
+    }
+
+    .btn-confirm:disabled {
+      background: #c7beb8;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 800px) {
+      body {
+        padding: 1rem 0.8rem;
+      }
+
+      .app-container {
+        padding: 1.5rem 1.2rem;
+        border-radius: 1.8rem;
+      }
+
+      .dual-panel {
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+
+      .set-list-panel {
+        flex: 0 0 auto;
+        max-height: 220px;
+        padding: 0.6rem;
+      }
+
+      .set-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .set-item {
+        flex: 0 0 auto;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .set-item .set-badge {
+        display: none;
+      }
+
+      .thumb-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        max-height: 400px;
+      }
+
+      .thumb-header h2 {
+        font-size: 1.1rem;
+      }
+
+      .modal-close {
+        top: -6px;
+        right: -6px;
+        width: 34px;
+        height: 34px;
+        font-size: 1.3rem;
+      }
+
+      .extract-btn {
+        bottom: 1.2rem;
+        right: 1.2rem;
+        padding: 0.7rem 1.2rem;
+        font-size: 0.8rem;
+      }
+
+      .toast-msg {
+        bottom: 6rem;
+        right: 1.2rem;
+      }
+
+      .series-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .title-section h1 {
+        font-size: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .thumb-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+
+      .set-list-panel {
+        max-height: 160px;
+      }
+
+      .thumb-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="title-section">
+        <h1>
+          ✦ 以闪·特姿图鉴
+          <span>全套装</span>
+        </h1>
+        <div class="subhead">点击缩略图放大 · 粘贴图片 · 提取链接</div>
+      </div>
+    </div>
+
+    <!-- 系列切换 + 搜索 -->
+    <div class="controls-row">
+      <div class="series-tabs">
+        <button class="series-tab active" data-series="six">六星</button>
+        <button class="series-tab" data-series="five">五星</button>
+        <button class="series-tab" data-series="blindbox">盲盒</button>
+      </div>
+      <div class="search-wrapper">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="16.5" y1="16.5" x2="21" y2="21" />
+        </svg>
+        <input type="text" id="searchInput" placeholder="搜索套装或花名..." autocomplete="off">
+      </div>
+    </div>
+
+    <div class="dual-panel">
+      <div class="set-list-panel">
+        <div class="set-list" id="setList"></div>
+      </div>
+
+      <div class="thumb-panel">
+        <div class="thumb-header">
+          <h2 id="currentSetName">所有套装 <small id="imageCount"></small></h2>
+          <div class="thumb-actions">
+            <button class="btn-paste" id="pasteBtn">📋 粘贴图片</button>
+          </div>
+        </div>
+        <div class="thumb-grid" id="thumbGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 放大模态框 -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="关闭">✕</button>
+      <img id="modalImage" src="" alt="放大查看">
+      <div class="modal-caption" id="modalCaption"></div>
+    </div>
+  </div>
+
+  <!-- 粘贴图片弹窗 -->
+  <div class="paste-modal-overlay" id="pasteModalOverlay">
+    <div class="paste-modal">
+      <h3 id="pasteModalTitle">粘贴图片</h3>
+      <p>点击下方区域，然后按 <strong>Ctrl+V</strong>（或 ⌘V）粘贴剪贴板中的图片。也可以将图片文件直接拖入。</p>
+      <div class="paste-zone" id="pasteZone" tabindex="0" role="button" aria-label="粘贴图片区域">
+        <span class="paste-icon">🖼️</span>
+        <span id="pasteZoneText">点击此处，然后粘贴图片</span>
+        <span class="paste-hint">支持 PNG / JPG / GIF / WebP</span>
+      </div>
+      <div class="paste-modal-actions">
+        <button class="btn-cancel" id="pasteCancelBtn">取消</button>
+        <button class="btn-confirm" id="pasteConfirmBtn" disabled>确认添加</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右下角提取链接按钮 -->
+  <button class="extract-btn" id="extractBtn">
+    🔗 提取图片链接
+  </button>
+  <div class="toast-msg" id="toastMsg">已复制到剪贴板</div>
+
+  <script>
+    (function() {
+      // ---------- 套装数据 ----------
+      const SIX_STAR_DATA = [
+        { name: "海谕遥音", nickname: "海王" },
+        { name: "韵海潮生", nickname: "人鱼" },
+        { name: "翩鸿赋雪", nickname: "赋雪" },
+        { name: "圣谛恋歌", nickname: "爱神" },
+        { name: "瑶台月阑", nickname: "嫦娥" },
+        { name: "鸢尾与权杖", nickname: "鸢尾" },
+        { name: "发条之心", nickname: "发条" },
+        { name: "绣阙锦天", nickname: "蜀绣" },
+        { name: "夜渊领主", nickname: "龙母" },
+        { name: "九尾熠世", nickname: "九尾狐" },
+        { name: "绮梦星河", nickname: "玛丽苏" },
+        { name: "瓷心傀儡", nickname: "傀儡" },
+        { name: "白泽华梦", nickname: "白泽" },
+        { name: "无烬之誓", nickname: "鬼新娘" },
+        { name: "永耀圣辉", nickname: "独角兽" },
+        { name: "醉引青鸾", nickname: "青鸾" },
+        { name: "烬蔷祈焰", nickname: "吸血鬼" },
+        { name: "林祈弦歌", nickname: "竖琴" },
+        { name: "圣权领域", nickname: "圣域" },
+        { name: "玄绛舞祓", nickname: "傩面" },
+        { name: "朔月神临", nickname: "狩月" },
+        { name: "梦遐绮旅", nickname: "洋娃娃" },
+        { name: "涅槃咏叹", nickname: "不死鸟" },
+        { name: "猩红噬梦", nickname: "玛丽" },
+        { name: "寅雪渡尘", nickname: "白虎" },
+        { name: "湮世瞳华", nickname: "美杜莎" },
+        { name: "岩塑花契", nickname: "百合" },
+        { name: "蕃神春醺", nickname: "小羊" },
+        { name: "修罗归鞘", nickname: "修罗" },
+        { name: "圣翎祈世", nickname: "俄蛋" },
+        { name: "云笺蝶梦", nickname: "化蝶" },
+      ];
+
+      const FIVE_STAR_DATA = [
+        { name: "卧月灼莲", nickname: "敦煌" },
+        { name: "莫佳娜的礼物", nickname: "小魔女" },
+        { name: "酣竹滚滚", nickname: "熊猫" },
+        { name: "鸾夙缘", nickname: "中婚" },
+        { name: "幻涟缀羽", nickname: "白羽裙" },
+        { name: "阿芙洛之绪", nickname: "阿芙洛" },
+        { name: "驯鹿精灵", nickname: "小鹿" },
+        { name: "沉梦魔咒", nickname: "大魔女" },
+        { name: "告白奶芙", nickname: "玉桂狗" },
+        { name: "1号机", nickname: "1号机" },
+        { name: "雪色蝶舞", nickname: "小蝴蝶" },
+        { name: "虚数戏梦", nickname: "戏曲" },
+        { name: "幻月神裁", nickname: "月神" },
+        { name: "蜜色蚀心", nickname: "豹豹" },
+        { name: "星钥寻踪", nickname: "钥匙" },
+        { name: "绯雪萦心", nickname: "美羊羊" },
+        { name: "甘戮天使", nickname: "剪刀" },
+        { name: "芯璃絮语", nickname: "水晶" },
+        { name: "绯海掠影", nickname: "海盗" },
+        { name: "绯蕾魇丝", nickname: "蜘蛛" },
+        { name: "雪映梅妆", nickname: "甄嬛" },
+        { name: "羽陨圣卉", nickname: "石膏" },
+        { name: "透明序曲", nickname: "白樱" },
+        { name: "冰璃琉心", nickname: "冰雪" },
+        { name: "星蛾灼穹", nickname: "飞蛾" },
+        { name: "绮野仙踪", nickname: "春神" },
+        { name: "零号塞壬", nickname: "塞壬" },
+        { name: "籍梦载年", nickname: "大书" },
+        { name: "珐琅蜻梦", nickname: "珐琅" },
+        { name: "枫色入盏", nickname: "枫叶" },
+        { name: "风翎叶信", nickname: "四叶草" },
+        { name: "盛世华廷", nickname: "礼服" },
+        { name: "倪克斯夜蔷", nickname: "黑蔷薇" },
+        { name: "绒兔心语", nickname: "兔子" },
+        { name: "痴梦无诉", nickname: "阴婚" },
+        { name: "月银九歌", nickname: "苗族" },
+        { name: "湖心旋舞", nickname: "芭蕾" },
+        { name: "春祈", nickname: "和服" },
+        { name: "金翎浮年", nickname: "孔雀" },
+        { name: "酷巧流心", nickname: "库洛米" },
+        { name: "吟游沙语", nickname: "吉普赛" },
+        { name: "影幕华宴", nickname: "贵妇" },
+        { name: "恒星纪元", nickname: "军装" },
+        { name: "赦罪永寐", nickname: "恶魔" },
+        { name: "噤声夜谭", nickname: "提灯" },
+        { name: "辰祈夜谭", nickname: "阿拉伯舞娘" },
+        { name: "金羚曜日", nickname: "羚羊" },
+        { name: "魔猎执事", nickname: "双枪" },
+        { name: "枫露晨祷", nickname: "帝政" },
+        { name: "禁忌咒魇", nickname: "女巫" },
+        { name: "血誓荆棘", nickname: "蚁后" },
+        { name: "凤仪万千", nickname: "华妃" },
+        { name: "冥焰熔骨", nickname: "熔岩" },
+        { name: "封印解除", nickname: "红樱" },
+        { name: "幽骨蚀光", nickname: "蛊师" },
+        { name: "翎羽焚灯", nickname: "焚灯" },
+        { name: "兔铃谣梦", nickname: "兔偶" },
+        { name: "恋恋香颂", nickname: "小蛋糕" },
+        { name: "玄凰引昼", nickname: "凤凰" },
+        { name: "闻香盛宴", nickname: "香水" },
+        { name: "雾夜蔷薇", nickname: "蔷薇" },
+        { name: "逆时沙海", nickname: "沙漏" }
+      ];
+
+      const BLINDBOX_DATA = [
+        { name: "殷夜堇华", nickname: "" },
+        { name: "旋梦王国", nickname: "" },
+        { name: "霁梦花吻", nickname: "" },
+        { name: "雪梦信使", nickname: "" },
+        { name: "谜兔狂想", nickname: "" },
+        { name: "天谛星砂", nickname: "" },
+        { name: "骑士终章", nickname: "" },
+        { name: "瓷赋霓裳", nickname: "" },
+        { name: "华廷靡曼", nickname: "" },
+        { name: "赤焰傲冕", nickname: "" },
+        { name: "猩红猎月", nickname: "" }
+      ];
+
+      function buildSets(data, series) {
+        return data.map((item, idx) => ({
+          id: `${series}-${idx}`,
+          series: series,
+          name: item.name,
+          nickname: item.nickname || '',
+          images: []
+        }));
+      }
+
+      let allSets = [
+        ...buildSets(SIX_STAR_DATA, 'six'),
+        ...buildSets(FIVE_STAR_DATA, 'five'),
+        ...buildSets(BLINDBOX_DATA, 'blindbox')
+      ];
+
+      // ---------- DOM 元素 ----------
+      const setListEl = document.getElementById('setList');
+      const thumbGridEl = document.getElementById('thumbGrid');
+      const searchInput = document.getElementById('searchInput');
+      const currentSetNameEl = document.getElementById('currentSetName');
+      const imageCountEl = document.getElementById('imageCount');
+      const modalOverlay = document.getElementById('modalOverlay');
+      const modalImage = document.getElementById('modalImage');
+      const modalCaption = document.getElementById('modalCaption');
+      const modalClose = document.getElementById('modalClose');
+      const extractBtn = document.getElementById('extractBtn');
+      const toastMsg = document.getElementById('toastMsg');
+      const pasteBtn = document.getElementById('pasteBtn');
+      const pasteModalOverlay = document.getElementById('pasteModalOverlay');
+      const pasteModalTitle = document.getElementById('pasteModalTitle');
+      const pasteZone = document.getElementById('pasteZone');
+      const pasteCancelBtn = document.getElementById('pasteCancelBtn');
+      const pasteConfirmBtn = document.getElementById('pasteConfirmBtn');
+      const seriesTabs = document.querySelectorAll('.series-tab');
+
+      // ---------- 状态 ----------
+      let activeSeries = 'six';
+      let activeSetId = null;
+      let searchKeyword = '';
+      let filteredSets = [];
+      let pendingImage = null;
+
+      function showToast(text) {
+        toastMsg.textContent = text;
+        toastMsg.classList.add('show');
+        setTimeout(() => {
+          toastMsg.classList.remove('show');
+        }, 2200);
+      }
+
+      function getSeriesSets() {
+        return allSets.filter(s => s.series === activeSeries);
+      }
+
+      function getActiveSet() {
+        return allSets.find(s => s.id === activeSetId) || null;
+      }
+
+      function closeModal() {
+        modalOverlay.classList.remove('show');
+        modalImage.src = '';
+      }
+
+      function openModal(imageUrl, caption) {
+        modalImage.src = imageUrl;
+        modalImage.alt = caption || '套装特姿';
+        modalCaption.textContent = caption || '';
+        modalOverlay.classList.add('show');
+      }
+
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+      });
+      modalClose.addEventListener('click', closeModal);
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalOverlay.classList.contains('show')) closeModal();
+      });
+
+      function resetPasteModal() {
+        pendingImage = null;
+        pasteZone.classList.remove('has-image');
+        pasteZone.innerHTML = `
+          <span class="paste-icon">🖼️</span>
+          <span id="pasteZoneText">点击此处，然后粘贴图片</span>
+          <span class="paste-hint">支持 PNG / JPG / GIF / WebP</span>
+        `;
+        pasteConfirmBtn.disabled = true;
+      }
+
+      function openPasteModal() {
+        const activeSet = getActiveSet();
+        if (!activeSet) {
+          showToast('请先在左侧选择一个套装');
+          return;
+        }
+        pasteModalTitle.textContent = `为「${activeSet.name}」粘贴图片`;
+        resetPasteModal();
+        pasteModalOverlay.classList.add('show');
+        setTimeout(() => pasteZone.focus(), 100);
+      }
+
+      function closePasteModal() {
+        pasteModalOverlay.classList.remove('show');
+        resetPasteModal();
+      }
+
+      pasteBtn.addEventListener('click', openPasteModal);
+      pasteCancelBtn.addEventListener('click', closePasteModal);
+      pasteModalOverlay.addEventListener('click', (e) => {
+        if (e.target === pasteModalOverlay) closePasteModal();
+      });
+
+      function handlePastedImage(file) {
+        if (!file || !file.type.startsWith('image/')) {
+          showToast('请粘贴图片文件');
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          pendingImage = ev.target.result;
+          pasteZone.classList.add('has-image');
+          pasteZone.innerHTML = `
+            <img class="paste-preview" src="${pendingImage}" alt="预览">
+            <span class="paste-hint" style="margin-top:0.4rem;">图片已就绪</span>
+          `;
+          pasteConfirmBtn.disabled = false;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      document.addEventListener('paste', (e) => {
+        if (!pasteModalOverlay.classList.contains('show')) return;
+        const items = e.clipboardData && e.clipboardData.items;
+        if (!items) return;
+        for (const item of items) {
+          if (item.type.startsWith('image/')) {
+            e.preventDefault();
+            const file = item.getAsFile();
+            if (file) handlePastedImage(file);
+            break;
+          }
+        }
+      });
+
+      pasteZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        pasteZone.style.borderColor = '#d9b8a4';
+        pasteZone.style.background = 'rgba(253, 250, 248, 0.9)';
+      });
+      pasteZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        pasteZone.style.borderColor = '';
+        pasteZone.style.background = '';
+      });
+      pasteZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        pasteZone.style.borderColor = '';
+        pasteZone.style.background = '';
+        const files = e.dataTransfer.files;
+        if (files.length > 0) handlePastedImage(files[0]);
+      });
+
+      pasteZone.addEventListener('click', () => pasteZone.focus());
+
+      pasteConfirmBtn.addEventListener('click', () => {
+        const activeSet = getActiveSet();
+        if (!activeSet) {
+          showToast('请先在左侧选择一个套装');
+          closePasteModal();
+          return;
+        }
+        if (!pendingImage) {
+          showToast('还没有粘贴图片');
+          return;
+        }
+        activeSet.images.push(pendingImage);
+        closePasteModal();
+        renderSetList();
+        showToast(`已添加 1 张图片到「${activeSet.name}」`);
+      });
+
+      function renderSetList() {
+        let seriesSets = getSeriesSets();
+        const keyword = searchKeyword.trim().toLowerCase();
+        if (keyword) {
+          filteredSets = seriesSets.filter(set =>
+            set.name.toLowerCase().includes(keyword) ||
+            (set.nickname && set.nickname.toLowerCase().includes(keyword))
+          );
+        } else {
+          filteredSets = seriesSets;
+        }
+
+        if (activeSetId && !filteredSets.some(s => s.id === activeSetId)) {
+          activeSetId = null;
+        }
+        if (filteredSets.length > 0 && !activeSetId) {
+          activeSetId = filteredSets[0].id;
+        }
+
+        if (filteredSets.length === 0) {
+          setListEl.innerHTML = `<div class="empty-state" style="padding: 2rem 0.5rem;"><span>🔍</span>没有匹配的套装</div>`;
+          renderThumbPanel();
+          return;
+        }
+
+        let html = '';
+        filteredSets.forEach(set => {
+          const isActive = (set.id === activeSetId);
+          const count = set.images.length;
+          const title = set.nickname ? `${set.name} (${set.nickname})` : set.name;
+          html += `
+            <div class="set-item ${isActive ? 'active' : ''}" data-set-id="${set.id}" title="${title}">
+              <span>${set.name}</span>
+              <span class="set-badge">${count}</span>
+            </div>
+          `;
+        });
+        setListEl.innerHTML = html;
+
+        document.querySelectorAll('.set-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const setId = item.dataset.setId;
+            if (setId) {
+              activeSetId = setId;
+              renderSetList();
+            }
+          });
+        });
+
+        renderThumbPanel();
+      }
+
+      function renderThumbPanel() {
+        const activeSet = getActiveSet();
+        if (!activeSet) {
+          currentSetNameEl.innerHTML = `套装特姿 <small id="imageCount"></small>`;
+          thumbGridEl.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><span>🖼️</span>请从左侧选择套装</div>`;
+          return;
+        }
+
+        currentSetNameEl.innerHTML = `${activeSet.name} <small id="imageCount">${activeSet.images.length} 张特姿</small>`;
+
+        if (activeSet.images.length === 0) {
+          thumbGridEl.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><span>📷</span>还没有图片，点击“粘贴图片”添加</div>`;
+          return;
+        }
+
+        let gridHtml = '';
+        activeSet.images.forEach((imgUrl, index) => {
+          const caption = `${activeSet.name} · 特姿 ${index + 1}`;
+          const safeUrl = imgUrl.replace(/"/g, '&quot;');
+          gridHtml += `
+            <div class="thumb-card" data-img-url="${safeUrl}" data-caption="${caption}" data-index="${index}">
+              <img src="${safeUrl}" alt="${activeSet.name} 特姿 ${index + 1}" loading="lazy" onerror="this.classList.add('error')">
+              <button class="thumb-delete" data-index="${index}" title="删除这张图片">✕</button>
+            </div>
+          `;
+        });
+        thumbGridEl.innerHTML = gridHtml;
+
+        document.querySelectorAll('.thumb-card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (e.target.classList.contains('thumb-delete')) return;
+            const imgUrl = card.dataset.imgUrl;
+            const caption = card.dataset.caption;
+            if (imgUrl) openModal(imgUrl, caption);
+          });
+        });
+
+        document.querySelectorAll('.thumb-delete').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const index = parseInt(btn.dataset.index, 10);
+            const activeSet = getActiveSet();
+            if (activeSet && !isNaN(index) && activeSet.images[index] !== undefined) {
+              activeSet.images.splice(index, 1);
+              renderSetList();
+            }
+          });
+        });
+      }
+
+      seriesTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const series = tab.dataset.series;
+          if (series === activeSeries) return;
+          seriesTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          activeSeries = series;
+          activeSetId = null;
+          renderSetList();
+        });
+      });
+
+      let searchTimer = null;
+      searchInput.addEventListener('input', (e) => {
+        if (searchTimer) clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+          searchKeyword = e.target.value;
+          activeSetId = null;
+          renderSetList();
+          searchTimer = null;
+        }, 200);
+      });
+
+      extractBtn.addEventListener('click', () => {
+        const activeSet = getActiveSet();
+        if (!activeSet) {
+          showToast('请先选择一个套装');
+          return;
+        }
+        if (activeSet.images.length === 0) {
+          showToast(`「${activeSet.name}」还没有图片`);
+          return;
+        }
+        const links = activeSet.images;
+        const textToCopy = links.join('\n');
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          showToast(`已复制「${activeSet.name}」的 ${links.length} 个图片链接`);
+        }).catch(() => {
+          const textarea = document.createElement('textarea');
+          textarea.value = textToCopy;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          showToast(`已复制「${activeSet.name}」的 ${links.length} 个图片链接`);
+        });
+      });
+
+      function init() {
+        const firstSix = allSets.find(s => s.series === 'six');
+        if (firstSix) activeSetId = firstSix.id;
+        searchKeyword = '';
+        searchInput.value = '';
+        renderSetList();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
