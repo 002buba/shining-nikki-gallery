@@ -37,7 +37,7 @@
       content: '';
       position: fixed;
       inset: 0;
-      background: rgba(245, 242, 240, 0.4); /* 从0.75降到0.4，背景更明显 */
+      background: rgba(245, 242, 240, 0.4);
       z-index: -1;
       pointer-events: none;
     }
@@ -45,7 +45,6 @@
     .app-container {
       max-width: 1400px;
       width: 100%;
-      /* 主容器大幅透明化 */
       background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
@@ -191,15 +190,16 @@
       min-height: 500px;
     }
 
-    /* 左右面板更透明 */
+    /* 左右面板透明化 */
     .set-list-panel, .thumb-panel {
       background: rgba(253, 251, 250, 0.35);
       border-radius: 1.8rem;
       border: 1px solid rgba(240, 234, 229, 0.4);
     }
 
+    /* 左侧列表 - 支持双列（五星） */
     .set-list-panel {
-      flex: 0 0 260px;
+      flex: 0 0 420px; /* 加宽以容纳双列 */
       padding: 0.8rem 0.6rem 0.8rem 0.8rem;
       max-height: 640px;
       overflow-y: auto;
@@ -221,9 +221,13 @@
     }
 
     .set-list {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr; /* 默认单列（六星/盲盒） */
       gap: 0.25rem;
+    }
+
+    .set-list.two-columns {
+      grid-template-columns: 1fr 1fr; /* 双列（五星） */
     }
 
     .set-item {
@@ -683,6 +687,12 @@
       background: #423d3a;
     }
 
+    @media (max-width: 1050px) {
+      .set-list-panel {
+        flex: 0 0 340px;
+      }
+    }
+
     @media (max-width: 800px) {
       body {
         padding: 1rem 0.8rem;
@@ -700,18 +710,16 @@
 
       .set-list-panel {
         flex: 0 0 auto;
-        max-height: 220px;
+        max-height: 300px;
         padding: 0.6rem;
       }
 
-      .set-list {
-        flex-direction: row;
-        flex-wrap: wrap;
+      .set-list.two-columns {
+        grid-template-columns: 1fr 1fr;
       }
 
       .set-item {
-        flex: 0 0 auto;
-        padding: 0.6rem 1rem;
+        padding: 0.6rem 0.8rem;
         font-size: 0.9rem;
       }
 
@@ -766,7 +774,7 @@
       }
 
       .set-list-panel {
-        max-height: 160px;
+        max-height: 220px;
       }
 
       .thumb-actions {
@@ -852,117 +860,124 @@
   <script>
     (function() {
       // ---------- 套装数据 ----------
+      // 六星（保持不变）
       const SIX_STAR_DATA = [
-        { name: "海谕遥音", nickname: "海王" },
-        { name: "韵海潮生", nickname: "人鱼" },
-        { name: "翩鸿赋雪", nickname: "赋雪" },
-        { name: "圣谛恋歌", nickname: "爱神" },
-        { name: "瑶台月阑", nickname: "嫦娥" },
-        { name: "鸢尾与权杖", nickname: "鸢尾" },
-        { name: "发条之心", nickname: "发条" },
-        { name: "绣阙锦天", nickname: "蜀绣" },
-        { name: "夜渊领主", nickname: "龙母" },
-        { name: "九尾熠世", nickname: "九尾狐" },
-        { name: "绮梦星河", nickname: "玛丽苏" },
-        { name: "瓷心傀儡", nickname: "傀儡" },
-        { name: "白泽华梦", nickname: "白泽" },
-        { name: "无烬之誓", nickname: "鬼新娘" },
-        { name: "永耀圣辉", nickname: "独角兽" },
-        { name: "醉引青鸾", nickname: "青鸾" },
-        { name: "烬蔷祈焰", nickname: "吸血鬼" },
-        { name: "林祈弦歌", nickname: "竖琴" },
-        { name: "圣权领域", nickname: "圣域" },
-        { name: "玄绛舞祓", nickname: "傩面" },
-        { name: "朔月神临", nickname: "狩月" },
-        { name: "梦遐绮旅", nickname: "洋娃娃" },
-        { name: "涅槃咏叹", nickname: "不死鸟" },
-        { name: "猩红噬梦", nickname: "玛丽" },
-        { name: "寅雪渡尘", nickname: "白虎" },
-        { name: "湮世瞳华", nickname: "美杜莎" },
-        { name: "岩塑花契", nickname: "百合" },
-        { name: "蕃神春醺", nickname: "小羊" },
-        { name: "修罗归鞘", nickname: "修罗" },
-        { name: "圣翎祈世", nickname: "俄蛋" },
-        { name: "云笺蝶梦", nickname: "化蝶" }
+        { name: "海谕遥音", nickname: "海王", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb3192f33f.webp"] },
+        { name: "韵海潮生", nickname: "人鱼", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec9fd62dc88.webp"] },
+        { name: "翩鸿赋雪", nickname: "赋雪", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecab4f93f5f.webp"] },
+        { name: "圣谛恋歌", nickname: "爱神", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecab6ccef94.webp"] },
+        { name: "瑶台月阑", nickname: "嫦娥", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb3752ef7f.webp"] },
+        { name: "鸢尾与权杖", nickname: "鸢尾", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb2f6d510b.webp"] },
+        { name: "发条之心", nickname: "发条", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecaaa39f211.webp"] },
+        { name: "绣阙锦天", nickname: "蜀绣", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb3aa604a6.webp"] },
+        { name: "夜渊领主", nickname: "龙母", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecada9a01b2.webp"] },
+        { name: "九尾熠世", nickname: "九尾狐", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecab04d6f03.webp"] },
+        { name: "绮梦星河", nickname: "玛丽苏", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb555e80fb.webp"] },
+        { name: "瓷心傀儡", nickname: "傀儡", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb57fcb79e.webp"] },
+        { name: "白泽华梦", nickname: "白泽", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb5fda4dfb.webp"] },
+        { name: "无烬之誓", nickname: "鬼新娘", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb6ceabb87.webp"] },
+        { name: "永耀圣辉", nickname: "独角兽", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb677a3f68.webp"] },
+        { name: "醉引青鸾", nickname: "青鸾", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb11687f6b.webp"] },
+        { name: "烬蔷祈焰", nickname: "吸血鬼", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aeca98f88115.webp", "https://picui.ogmua.cn/s1/2026/11/06/6aeca98f964fc.webp"] },
+        { name: "林祈弦歌", nickname: "竖琴", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecae098752c.webp", "https://picui.ogmua.cn/s1/2026/11/06/6aecb0c5005ad.webp"] },
+        { name: "圣权领域", nickname: "圣域", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca6db38b26.webp", "https://picui.ogmua.cn/s1/2026/11/06/6aecb0a053e63.webp"] },
+        { name: "玄绛舞祓", nickname: "傩面", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca75f6abd5.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aeca7770fac0.webp"] },
+        { name: "朔月神临", nickname: "狩月", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca0225b9e9.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aeca02299637.webp"] },
+        { name: "梦遐绮旅", nickname: "洋娃娃", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca133652ee.webp", "https://picui.ogmua.cn/s1/2026/11/06/6aecacd9ac3ab.webp"] },
+        { name: "涅槃咏叹", nickname: "不死鸟", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb06803d62.webp", "https://picui.ogmua.cn/s1/2026/11/06/6aecb0682d6a0.webp"] },
+        { name: "猩红噬梦", nickname: "玛丽", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb00305282.webp", "https://picui.ogmua.cn/s1/2026/11/06/6aecb012b4303.webp"] },
+        { name: "寅雪渡尘", nickname: "白虎", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca26b39316.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aeca26b3bc24.webp"] },
+        { name: "湮世瞳华", nickname: "美杜莎", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec9aabc4ce6.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aec9aac4a81c.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aec9aac4535c.webp"] },
+        { name: "岩塑花契", nickname: "百合", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec9a2fb730a.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aec9a2fc8d12.webp"] },
+        { name: "蕃神春醺", nickname: "小羊", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec99abc8e63.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aec99abc6f18.webp"] },
+        { name: "修罗归鞘", nickname: "修罗", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec98ac9a77b.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aec98e0e2418.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aec98e0eb66c.webp"] },
+        { name: "圣翎祈世", nickname: "俄蛋", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec97fd36e1b.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aec97fd3d23c.webp"] },
+        { name: "云笺蝶梦", nickname: "化蝶", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec90c8e4da6.webp", "https://picui.ogmua.cn/s1/2026/11/05/6aec90c93e48f.webp"] }
       ];
 
+      // 五星（按照图片的新顺序和双列逻辑）
       const FIVE_STAR_DATA = [
-        { name: "卧月灼莲", nickname: "敦煌" },
-        { name: "莫佳娜的礼物", nickname: "小魔女" },
-        { name: "酣竹滚滚", nickname: "熊猫" },
-        { name: "鸾夙缘", nickname: "中婚" },
-        { name: "幻涟缀羽", nickname: "白羽裙" },
-        { name: "阿芙洛之绪", nickname: "阿芙洛" },
-        { name: "驯鹿精灵", nickname: "小鹿" },
-        { name: "沉梦魔咒", nickname: "大魔女" },
-        { name: "告白奶芙", nickname: "玉桂狗" },
-        { name: "1号机", nickname: "1号机" },
-        { name: "雪色蝶舞", nickname: "小蝴蝶" },
-        { name: "虚数戏梦", nickname: "戏曲" },
-        { name: "幻月神裁", nickname: "月神" },
-        { name: "蜜色蚀心", nickname: "豹豹" },
-        { name: "星钥寻踪", nickname: "钥匙" },
-        { name: "绯雪萦心", nickname: "美羊羊" },
-        { name: "甘戮天使", nickname: "剪刀" },
-        { name: "芯璃絮语", nickname: "水晶" },
-        { name: "绯海掠影", nickname: "海盗" },
-        { name: "绯蕾魇丝", nickname: "蜘蛛" },
-        { name: "雪映梅妆", nickname: "甄嬛" },
-        { name: "羽陨圣卉", nickname: "石膏" },
-        { name: "透明序曲", nickname: "白樱" },
-        { name: "冰璃琉心", nickname: "冰雪" },
-        { name: "星蛾灼穹", nickname: "飞蛾" },
-        { name: "绮野仙踪", nickname: "春神" },
-        { name: "零号塞壬", nickname: "塞壬" },
-        { name: "籍梦载年", nickname: "大书" },
-        { name: "珐琅蜻梦", nickname: "珐琅" },
-        { name: "枫色入盏", nickname: "枫叶" },
-        { name: "风翎叶信", nickname: "四叶草" },
-        { name: "盛世华廷", nickname: "礼服" },
-        { name: "倪克斯夜蔷", nickname: "黑蔷薇" },
-        { name: "绒兔心语", nickname: "兔子" },
-        { name: "痴梦无诉", nickname: "阴婚" },
-        { name: "月银九歌", nickname: "苗族" },
-        { name: "湖心旋舞", nickname: "芭蕾" },
-        { name: "春祈", nickname: "和服" },
-        { name: "金翎浮年", nickname: "孔雀" },
-        { name: "酷巧流心", nickname: "库洛米" },
-        { name: "吟游沙语", nickname: "吉普赛" },
-        { name: "影幕华宴", nickname: "贵妇" },
-        { name: "恒星纪元", nickname: "军装" },
-        { name: "赦罪永寐", nickname: "恶魔" },
-        { name: "噤声夜谭", nickname: "提灯" },
-        { name: "辰祈夜谭", nickname: "阿拉伯舞娘" },
-        { name: "金羚曜日", nickname: "羚羊" },
-        { name: "魔猎执事", nickname: "双枪" },
-        { name: "枫露晨祷", nickname: "帝政" },
-        { name: "禁忌咒魇", nickname: "女巫" },
-        { name: "血誓荆棘", nickname: "蚁后" },
-        { name: "凤仪万千", nickname: "华妃" },
-        { name: "冥焰熔骨", nickname: "熔岩" },
-        { name: "封印解除", nickname: "红樱" },
-        { name: "幽骨蚀光", nickname: "蛊师" },
-        { name: "翎羽焚灯", nickname: "焚灯" },
-        { name: "兔铃谣梦", nickname: "兔偶" },
-        { name: "恋恋香颂", nickname: "小蛋糕" },
-        { name: "玄凰引昼", nickname: "凤凰" },
-        { name: "闻香盛宴", nickname: "香水" },
-        { name: "雾夜蔷薇", nickname: "蔷薇" },
-        { name: "逆时沙海", nickname: "沙漏" }
+        // 第一列
+        { name: "卧月灼莲", nickname: "敦煌", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca5aeb6985.webp"] },
+        { name: "莫佳娜的礼物", nickname: "小魔女", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecaa771cab7.webp"] },
+        { name: "酣竹滚滚", nickname: "熊猫", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aeca94b877f4.webp"] },
+        { name: "鸾夙缘", nickname: "中婚", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb2cba5f5b.webp"] },
+        { name: "幻涟缀羽", nickname: "白羽裙", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecac99afca4.webp"] },
+        { name: "阿芙洛之绪", nickname: "阿芙洛", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecacb2dcef1.webp"] },
+        { name: "驯鹿精灵", nickname: "小鹿", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb44c246c2.webp"] },
+        { name: "沉梦魔咒", nickname: "大魔女", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecad7eef592.webp"] },
+        { name: "告白奶芙", nickname: "玉桂狗", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca3299d11b.webp"] },
+        { name: "1号机", nickname: "1号机", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca5d69c3ec.webp"] },
+        { name: "雪色蝶舞", nickname: "小蝴蝶", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca4509feb2.webp"] },
+        { name: "虚数戏梦", nickname: "戏曲", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb5db2b3b1.webp"] },
+        { name: "幻月神裁", nickname: "月神", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca6699997e.webp"] },
+        { name: "蜜色蚀心", nickname: "豹豹", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca62003f68.webp"] },
+        { name: "星钥寻踪", nickname: "钥匙", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca6457c23e.webp"] },
+        { name: "绯雪萦心", nickname: "美羊羊", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca1d11dde0.webp"] },
+        { name: "甘戮天使", nickname: "剪刀", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecae8b849e1.webp"] },
+        { name: "芯璃絮语", nickname: "水晶", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca2951ee8c.webp"] },
+        { name: "绯海掠影", nickname: "海盗", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb0344fb1d.webp"] },
+        { name: "绯蕾魇丝", nickname: "蜘蛛", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca70c9db4b.webp"] },
+        { name: "雪映梅妆", nickname: "甄嬛", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb0868793a.webp"] },
+        { name: "羽陨圣卉", nickname: "石膏", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca0c0ea796.webp"] },
+        { name: "透明序曲", nickname: "白樱", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca19d3e35a.webp"] },
+        { name: "冰璃琉心", nickname: "冰雪", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca7a2371c3.webp"] },
+        { name: "星蛾灼穹", nickname: "飞蛾", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aeca8fa6e16e.webp"] },
+        { name: "绮野仙踪", nickname: "春神", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec9b3b73ff0.webp"] },
+        { name: "零号塞壬", nickname: "塞壬", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec9a4d904e3.webp"] },
+        { name: "籍梦载年", nickname: "大书", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec99ddc7388.webp"] },
+        { name: "珐琅蜻梦", nickname: "珐琅", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec992422ea3.webp"] },
+        { name: "枫色入盏", nickname: "枫叶", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec978c04d9f.webp"] },
+        { name: "花间茶约", nickname: "茶桌", images: [] },
+        { name: "风翎叶信", nickname: "四叶草", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec90c8e6071.webp"] },
+        // 第二列
+        { name: "盛世华廷", nickname: "礼服", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb5290aa72.webp"] },
+        { name: "倪克斯夜蔷", nickname: "黑蔷薇", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb342cb70b.webp"] },
+        { name: "绒兔心语", nickname: "兔子", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aeca92a7dd0f.webp"] },
+        { name: "痴梦无诉", nickname: "阴婚", images: [] },
+        { name: "月银九歌", nickname: "苗族", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecac7fa7a3f.webp"] },
+        { name: "湖心旋舞", nickname: "芭蕾", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb3efb7181.webp"] },
+        { name: "春祈", nickname: "和服", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb41b88094.webp"] },
+        { name: "金翎浮年", nickname: "孔雀", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecad5285a69.webp"] },
+        { name: "酷巧流心", nickname: "库洛米", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca316b3f64.webp"] },
+        { name: "吟游沙语", nickname: "吉普赛", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecaabb1acd1.webp"] },
+        { name: "影幕华宴", nickname: "贵妇", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aeca8d754bcc.webp"] },
+        { name: "恒星纪元", nickname: "军装", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb5b0c4a8d.webp"] },
+        { name: "赦罪永寐", nickname: "恶魔", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca5f08b62e.webp"] },
+        { name: "噤声夜谭", nickname: "提灯", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb624328aa.webp"] },
+        { name: "辰祈夜谭", nickname: "阿拉伯舞娘", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aeca8b5b8ec7.webp"] },
+        { name: "金羚曜日", nickname: "羚羊", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb153a7899.webp"] },
+        { name: "魔猎执事", nickname: "双枪", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca68d6a16e.webp"] },
+        { name: "枫露晨祷", nickname: "帝政", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca2b661281.webp"] },
+        { name: "禁忌咒魇", nickname: "女巫", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca6b20b85c.webp"] },
+        { name: "血誓荆棘", nickname: "蚁后", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca739724d5.webp"] },
+        { name: "凤仪万千", nickname: "华妃", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca05462b0b.webp"] },
+        { name: "冥焰熔骨", nickname: "熔岩", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca0e33a51f.webp"] },
+        { name: "封印解除", nickname: "红樱", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca160df8d9.webp"] },
+        { name: "幽骨蚀光", nickname: "蛊师", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca7be2d74e.webp"] },
+        { name: "翎羽焚灯", nickname: "焚灯", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecaae254d43.webp"] },
+        { name: "兔铃谣梦", nickname: "兔偶", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec9b0de70aa.webp"] },
+        { name: "恋恋香颂", nickname: "小蛋糕", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec9a6f27829.webp"] },
+        { name: "玄凰引昼", nickname: "凤凰", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec99f6afb7b.webp"] },
+        { name: "闻香盛宴", nickname: "香水", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec9949a2c1f.webp"] },
+        { name: "雾夜蔷薇", nickname: "蔷薇", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec97485a217.webp"] },
+        { name: "烛魔幽歌", nickname: "烛台", images: [] },
+        { name: "逆时沙海", nickname: "沙漏", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec90c8c9cbc.webp"] }
       ];
 
+      // 盲盒（保持不变，但由于文本里提供了链接，这里顺带更新一下）
       const BLINDBOX_DATA = [
-        { name: "殷夜堇华", nickname: "" },
-        { name: "旋梦王国", nickname: "" },
-        { name: "霁梦花吻", nickname: "" },
-        { name: "雪梦信使", nickname: "" },
-        { name: "谜兔狂想", nickname: "" },
-        { name: "天谛星砂", nickname: "" },
-        { name: "骑士终章", nickname: "" },
-        { name: "瓷赋霓裳", nickname: "" },
-        { name: "华廷靡曼", nickname: "" },
-        { name: "赤焰傲冕", nickname: "" },
-        { name: "猩红猎月", nickname: "" }
+        { name: "殷夜堇华", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecaa2a404b7.webp"] },
+        { name: "旋梦王国", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecaa14797a9.webp"] },
+        { name: "霁梦花吻", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aeca96428832.webp"] },
+        { name: "雪梦信使", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb65b999cc.webp"] },
+        { name: "谜兔狂想", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/06/6aecb0f128856.webp"] },
+        { name: "天谛星砂", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca6f526037.webp"] },
+        { name: "骑士终章", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca113f20fd.webp"] },
+        { name: "瓷赋霓裳", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aeca2075427a.webp"] },
+        { name: "华廷靡曼", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec9ad948250.webp"] },
+        { name: "赤焰傲冕", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec99763dd06.webp"] },
+        { name: "猩红猎月", nickname: "", images: ["https://picui.ogmua.cn/s1/2026/11/05/6aec97b6d794e.webp"] }
       ];
 
       function buildSets(data, series) {
@@ -971,7 +986,7 @@
           series: series,
           name: item.name,
           nickname: item.nickname || '',
-          images: []
+          images: item.images ? [...item.images] : []
         }));
       }
 
@@ -981,14 +996,11 @@
         ...buildSets(BLINDBOX_DATA, 'blindbox')
       ];
 
-      // 内置图片标识
-      const BUILT_IN_URL = 'https://picui.ogmua.cn/s1/2026/11/05/6aec90c8c9cbc.webp';
-      
-      // 初始化内置沙漏套装图片
-      const shaLou = allSets.find(s => s.name === '逆时沙海');
-      if (shaLou) {
-        shaLou.images.push(BUILT_IN_URL);
-      }
+      // 收集所有初始的内置链接，用于后续“提取新增链接”时排除
+      const BUILT_IN_LINKS = new Set();
+      allSets.forEach(set => {
+        set.images.forEach(url => BUILT_IN_LINKS.add(url));
+      });
 
       // ---------- DOM 元素 ----------
       const setListEl = document.getElementById('setList');
@@ -1131,8 +1143,15 @@
           activeSetId = filteredSets[0].id;
         }
 
+        // 处理双列布局类
+        if (activeSeries === 'five') {
+          setListEl.classList.add('two-columns');
+        } else {
+          setListEl.classList.remove('two-columns');
+        }
+
         if (filteredSets.length === 0) {
-          setListEl.innerHTML = `<div class="empty-state" style="padding: 2rem 0.5rem;"><span>🔍</span>没有匹配的套装</div>`;
+          setListEl.innerHTML = `<div class="empty-state" style="padding: 2rem 0.5rem; grid-column: 1 / -1;"><span>🔍</span>没有匹配的套装</div>`;
           renderThumbPanel();
           return;
         }
@@ -1240,20 +1259,19 @@
         }, 200);
       });
 
-      // ---------- 提取新增链接（带系列和套装名，排除内置） ----------
+      // ---------- 提取新增链接（带系列和套装名，排除所有内置） ----------
       extractBtn.addEventListener('click', () => {
         let results = [];
         const seriesNames = { 'six': '六星', 'five': '五星', 'blindbox': '盲盒' };
 
         allSets.forEach(set => {
-          // 过滤掉内置的图片链接
-          const newImages = set.images.filter(url => url !== BUILT_IN_URL);
+          // 过滤掉所有初始化时内置的图片链接
+          const newImages = set.images.filter(url => !BUILT_IN_LINKS.has(url));
           
           if (newImages.length > 0) {
             const seriesStr = seriesNames[set.series];
             const setNameStr = set.nickname ? `${set.name}(${set.nickname})` : set.name;
             
-            // 如果一个套装有多张新增图，每张图占一行，格式统一
             newImages.forEach(url => {
               results.push(`【${seriesStr}】${setNameStr}：${url}`);
             });
@@ -1261,7 +1279,7 @@
         });
 
         if (results.length === 0) {
-          showToast('目前没有新增的图片链接（已排除内置沙漏图）');
+          showToast('目前没有新增的图片链接（已排除内置图片）');
           return;
         }
 
