@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>以闪 · 套装特姿图鉴 · 盲盒版</title>
+  <title>以闪 · 套装特姿图鉴</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
@@ -32,12 +32,12 @@
       position: relative;
     }
 
-    /* 背景图的淡化遮罩层 */
+    /* 背景图的淡化遮罩层 - 调低透明度让背景更清晰 */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background: rgba(245, 242, 240, 0.75); /* 这里的 0.75 是淡化程度，可自行调整 */
+      background: rgba(245, 242, 240, 0.4); /* 从0.75降到0.4，背景更明显 */
       z-index: -1;
       pointer-events: none;
     }
@@ -45,11 +45,11 @@
     .app-container {
       max-width: 1400px;
       width: 100%;
-      /* 改为半透明背景 + 毛玻璃效果 */
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      /* 主容器大幅透明化 */
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 2.5rem;
       box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1), 0 8px 24px -6px rgba(0, 0, 0, 0.05);
       padding: 2rem 2rem 2.5rem;
@@ -89,9 +89,9 @@
 
     .subhead {
       font-size: 0.95rem;
-      color: #77706b;
+      color: #5a524d;
       margin-top: 0.25rem;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     /* 系列切换 + 搜索 */
@@ -106,7 +106,7 @@
 
     .series-tabs {
       display: flex;
-      background: rgba(245, 239, 234, 0.8);
+      background: rgba(245, 239, 234, 0.6);
       border-radius: 60px;
       padding: 0.3rem;
       gap: 0.2rem;
@@ -129,14 +129,14 @@
     }
 
     .series-tab.active {
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.85);
       color: #1f1d1b;
       font-weight: 600;
       box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.15);
     }
 
     .series-tab:hover:not(.active) {
-      background: rgba(237, 229, 223, 0.8);
+      background: rgba(237, 229, 223, 0.6);
       color: #4a3f3a;
     }
 
@@ -164,8 +164,8 @@
       padding: 0.9rem 1.2rem 0.9rem 3rem;
       font-family: inherit;
       font-size: 1rem;
-      background: rgba(250, 248, 246, 0.8);
-      border: 1.5px solid rgba(237, 233, 229, 0.8);
+      background: rgba(250, 248, 246, 0.5);
+      border: 1.5px solid rgba(237, 233, 229, 0.5);
       border-radius: 3rem;
       outline: none;
       transition: all 0.2s;
@@ -175,7 +175,7 @@
 
     .search-wrapper input:focus {
       border-color: #d9b8a4;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.85);
       box-shadow: 0 4px 12px rgba(185, 143, 114, 0.15);
     }
 
@@ -191,13 +191,16 @@
       min-height: 500px;
     }
 
-    /* 左侧列表透明化 */
+    /* 左右面板更透明 */
+    .set-list-panel, .thumb-panel {
+      background: rgba(253, 251, 250, 0.35);
+      border-radius: 1.8rem;
+      border: 1px solid rgba(240, 234, 229, 0.4);
+    }
+
     .set-list-panel {
       flex: 0 0 260px;
-      background: rgba(253, 251, 250, 0.6);
-      border-radius: 1.8rem;
       padding: 0.8rem 0.6rem 0.8rem 0.8rem;
-      border: 1px solid rgba(240, 234, 229, 0.6);
       max-height: 640px;
       overflow-y: auto;
       scrollbar-width: thin;
@@ -240,20 +243,20 @@
     }
 
     .set-item:hover {
-      background: rgba(247, 239, 234, 0.7);
+      background: rgba(247, 239, 234, 0.5);
       color: #2e2b2a;
     }
 
     .set-item.active {
-      background: rgba(255, 255, 255, 0.9);
-      border-color: #e3cfc0;
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(227, 207, 192, 0.8);
       box-shadow: 0 6px 14px -6px rgba(170, 130, 100, 0.15);
       color: #1f1d1b;
       font-weight: 600;
     }
 
     .set-item .set-badge {
-      background: rgba(237, 227, 219, 0.8);
+      background: rgba(237, 227, 219, 0.6);
       color: #8b6b54;
       font-size: 0.7rem;
       font-weight: 600;
@@ -268,14 +271,10 @@
       color: #6e4c36;
     }
 
-    /* 右侧面板透明化 */
     .thumb-panel {
       flex: 1;
       min-width: 0;
-      background: rgba(253, 251, 250, 0.6);
-      border-radius: 1.8rem;
       padding: 1.2rem 1.2rem 1.5rem;
-      border: 1px solid rgba(240, 234, 229, 0.6);
       display: flex;
       flex-direction: column;
     }
@@ -299,7 +298,7 @@
     .thumb-header h2 small {
       font-weight: 400;
       font-size: 0.85rem;
-      color: #978b83;
+      color: #6a605a;
       margin-left: 0.6rem;
     }
 
@@ -309,9 +308,9 @@
       align-items: center;
     }
 
-    .btn-paste {
-      background: rgba(242, 232, 226, 0.9);
-      border: 1px solid rgba(225, 210, 200, 0.8);
+    .btn-add-link {
+      background: rgba(242, 232, 226, 0.7);
+      border: 1px solid rgba(225, 210, 200, 0.6);
       border-radius: 30px;
       padding: 0.4rem 1rem;
       font-size: 0.8rem;
@@ -325,8 +324,8 @@
       gap: 0.3rem;
     }
 
-    .btn-paste:hover {
-      background: rgba(232, 217, 207, 0.9);
+    .btn-add-link:hover {
+      background: rgba(232, 217, 207, 0.8);
       border-color: #cbb9ab;
     }
 
@@ -355,11 +354,11 @@
     }
 
     .thumb-card {
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.6);
       border-radius: 1.2rem;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02), 0 2px 6px rgba(0, 0, 0, 0.03);
-      border: 1px solid rgba(241, 235, 231, 0.8);
+      border: 1px solid rgba(241, 235, 231, 0.5);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: pointer;
       aspect-ratio: 1 / 1;
@@ -372,7 +371,7 @@
       transform: translateY(-3px);
       box-shadow: 0 12px 24px -12px rgba(120, 90, 70, 0.28), 0 4px 12px rgba(0, 0, 0, 0.05);
       border-color: #e1d2c8;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.85);
     }
 
     .thumb-card img {
@@ -381,7 +380,7 @@
       object-fit: cover;
       display: block;
       transition: filter 0.15s;
-      background: rgba(245, 239, 234, 0.5);
+      background: rgba(245, 239, 234, 0.3);
     }
 
     .thumb-card img.error {
@@ -507,7 +506,7 @@
     .empty-state {
       text-align: center;
       padding: 2.5rem 1rem;
-      color: #8a7e77;
+      color: #6a605a;
       font-size: 1rem;
       display: flex;
       flex-direction: column;
@@ -578,8 +577,8 @@
       transform: translateY(0);
     }
 
-    /* 粘贴图片弹窗 */
-    .paste-modal-overlay {
+    /* 添加链接弹窗 */
+    .link-modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(30, 25, 22, 0.7);
@@ -594,96 +593,68 @@
       transition: opacity 0.2s, visibility 0.2s;
     }
 
-    .paste-modal-overlay.show {
+    .link-modal-overlay.show {
       visibility: visible;
       opacity: 1;
     }
 
-    .paste-modal {
+    .link-modal {
       background: rgba(255, 255, 255, 0.95);
       border-radius: 2rem;
       padding: 1.8rem;
-      max-width: 560px;
+      max-width: 520px;
       width: 100%;
       box-shadow: 0 40px 70px -20px rgba(0, 0, 0, 0.5);
       transform: scale(0.96);
       transition: transform 0.2s;
     }
 
-    .paste-modal-overlay.show .paste-modal {
+    .link-modal-overlay.show .link-modal {
       transform: scale(1);
     }
 
-    .paste-modal h3 {
+    .link-modal h3 {
       font-size: 1.2rem;
       font-weight: 600;
       margin-bottom: 0.4rem;
       color: #1f1d1b;
     }
 
-    .paste-modal p {
+    .link-modal p {
       font-size: 0.9rem;
       color: #7a6e66;
       margin-bottom: 1rem;
-      line-height: 1.4;
     }
 
-    .paste-zone {
-      border: 2px dashed #d9cdc4;
-      border-radius: 1.4rem;
-      padding: 2rem 1.5rem;
-      text-align: center;
-      color: #a79b94;
-      font-size: 0.95rem;
-      transition: border-color 0.2s, background 0.2s;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-      min-height: 160px;
-      justify-content: center;
+    .link-modal textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 0.9rem 1rem;
+      border-radius: 1.2rem;
+      border: 1.5px solid #ede9e5;
+      background: rgba(250, 248, 246, 0.9);
+      font-family: inherit;
+      font-size: 0.9rem;
+      resize: vertical;
       outline: none;
-      background: rgba(250, 248, 246, 0.6);
+      transition: border-color 0.2s;
+      color: #2e2b2a;
+      line-height: 1.5;
     }
 
-    .paste-zone:focus,
-    .paste-zone:hover {
+    .link-modal textarea:focus {
       border-color: #d9b8a4;
-      background: rgba(253, 250, 248, 0.9);
+      background: #ffffff;
     }
 
-    .paste-zone.has-image {
-      border-color: #c3b2a5;
-      background: rgba(250, 245, 241, 0.9);
-    }
-
-    .paste-zone .paste-icon {
-      font-size: 2.2rem;
-      line-height: 1;
-    }
-
-    .paste-zone .paste-hint {
-      font-size: 0.85rem;
-      color: #b7aea7;
-    }
-
-    .paste-preview {
-      max-width: 100%;
-      max-height: 240px;
-      border-radius: 1rem;
-      object-fit: contain;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-    }
-
-    .paste-modal-actions {
+    .link-modal-actions {
       display: flex;
       gap: 0.8rem;
       justify-content: flex-end;
       margin-top: 1.2rem;
     }
 
-    .paste-modal-actions button {
+    .link-modal-actions button {
       padding: 0.7rem 1.5rem;
       border-radius: 60px;
       font-family: inherit;
@@ -710,11 +681,6 @@
 
     .btn-confirm:hover {
       background: #423d3a;
-    }
-
-    .btn-confirm:disabled {
-      background: #c7beb8;
-      cursor: not-allowed;
     }
 
     @media (max-width: 800px) {
@@ -818,7 +784,7 @@
           ✦ 以闪·特姿图鉴
           <span>全套装</span>
         </h1>
-        <div class="subhead">点击缩略图放大 · 粘贴图片 · 提取链接</div>
+        <div class="subhead">点击缩略图放大 · 添加图片链接 · 智能提取新增链接</div>
       </div>
     </div>
 
@@ -847,7 +813,7 @@
         <div class="thumb-header">
           <h2 id="currentSetName">所有套装 <small id="imageCount"></small></h2>
           <div class="thumb-actions">
-            <button class="btn-paste" id="pasteBtn">📋 粘贴图片</button>
+            <button class="btn-add-link" id="addLinkBtn">🔗 添加图片链接</button>
           </div>
         </div>
         <div class="thumb-grid" id="thumbGrid"></div>
@@ -864,26 +830,22 @@
     </div>
   </div>
 
-  <!-- 粘贴图片弹窗 -->
-  <div class="paste-modal-overlay" id="pasteModalOverlay">
-    <div class="paste-modal">
-      <h3 id="pasteModalTitle">粘贴图片</h3>
-      <p>点击下方区域，然后按 <strong>Ctrl+V</strong>（或 ⌘V）粘贴剪贴板中的图片。也可以将图片文件直接拖入。</p>
-      <div class="paste-zone" id="pasteZone" tabindex="0" role="button" aria-label="粘贴图片区域">
-        <span class="paste-icon">🖼️</span>
-        <span id="pasteZoneText">点击此处，然后粘贴图片</span>
-        <span class="paste-hint">支持 PNG / JPG / GIF / WebP</span>
-      </div>
-      <div class="paste-modal-actions">
-        <button class="btn-cancel" id="pasteCancelBtn">取消</button>
-        <button class="btn-confirm" id="pasteConfirmBtn" disabled>确认添加</button>
+  <!-- 添加链接弹窗 -->
+  <div class="link-modal-overlay" id="linkModalOverlay">
+    <div class="link-modal">
+      <h3 id="linkModalTitle">添加图片链接</h3>
+      <p>每行一个图片链接，支持多个链接同时添加</p>
+      <textarea id="linkInput" placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg"></textarea>
+      <div class="link-modal-actions">
+        <button class="btn-cancel" id="linkCancelBtn">取消</button>
+        <button class="btn-confirm" id="linkConfirmBtn">确认添加</button>
       </div>
     </div>
   </div>
 
   <!-- 右下角提取链接按钮 -->
   <button class="extract-btn" id="extractBtn">
-    🔗 提取图片链接
+    🔗 提取新增图片链接
   </button>
   <div class="toast-msg" id="toastMsg">已复制到剪贴板</div>
 
@@ -921,7 +883,7 @@
         { name: "蕃神春醺", nickname: "小羊" },
         { name: "修罗归鞘", nickname: "修罗" },
         { name: "圣翎祈世", nickname: "俄蛋" },
-        { name: "云笺蝶梦", nickname: "化蝶" },
+        { name: "云笺蝶梦", nickname: "化蝶" }
       ];
 
       const FIVE_STAR_DATA = [
@@ -1019,6 +981,15 @@
         ...buildSets(BLINDBOX_DATA, 'blindbox')
       ];
 
+      // 内置图片标识
+      const BUILT_IN_URL = 'https://picui.ogmua.cn/s1/2026/11/05/6aec90c8c9cbc.webp';
+      
+      // 初始化内置沙漏套装图片
+      const shaLou = allSets.find(s => s.name === '逆时沙海');
+      if (shaLou) {
+        shaLou.images.push(BUILT_IN_URL);
+      }
+
       // ---------- DOM 元素 ----------
       const setListEl = document.getElementById('setList');
       const thumbGridEl = document.getElementById('thumbGrid');
@@ -1031,12 +1002,12 @@
       const modalClose = document.getElementById('modalClose');
       const extractBtn = document.getElementById('extractBtn');
       const toastMsg = document.getElementById('toastMsg');
-      const pasteBtn = document.getElementById('pasteBtn');
-      const pasteModalOverlay = document.getElementById('pasteModalOverlay');
-      const pasteModalTitle = document.getElementById('pasteModalTitle');
-      const pasteZone = document.getElementById('pasteZone');
-      const pasteCancelBtn = document.getElementById('pasteCancelBtn');
-      const pasteConfirmBtn = document.getElementById('pasteConfirmBtn');
+      const addLinkBtn = document.getElementById('addLinkBtn');
+      const linkModalOverlay = document.getElementById('linkModalOverlay');
+      const linkModalTitle = document.getElementById('linkModalTitle');
+      const linkInput = document.getElementById('linkInput');
+      const linkCancelBtn = document.getElementById('linkCancelBtn');
+      const linkConfirmBtn = document.getElementById('linkConfirmBtn');
       const seriesTabs = document.querySelectorAll('.series-tab');
 
       // ---------- 状态 ----------
@@ -1044,7 +1015,6 @@
       let activeSetId = null;
       let searchKeyword = '';
       let filteredSets = [];
-      let pendingImage = null;
 
       function showToast(text) {
         toastMsg.textContent = text;
@@ -1082,109 +1052,66 @@
         if (e.key === 'Escape' && modalOverlay.classList.contains('show')) closeModal();
       });
 
-      function resetPasteModal() {
-        pendingImage = null;
-        pasteZone.classList.remove('has-image');
-        pasteZone.innerHTML = `
-          <span class="paste-icon">🖼️</span>
-          <span id="pasteZoneText">点击此处，然后粘贴图片</span>
-          <span class="paste-hint">支持 PNG / JPG / GIF / WebP</span>
-        `;
-        pasteConfirmBtn.disabled = true;
-      }
-
-      function openPasteModal() {
+      // ---------- 添加链接弹窗 ----------
+      function openLinkModal() {
         const activeSet = getActiveSet();
         if (!activeSet) {
           showToast('请先在左侧选择一个套装');
           return;
         }
-        pasteModalTitle.textContent = `为「${activeSet.name}」粘贴图片`;
-        resetPasteModal();
-        pasteModalOverlay.classList.add('show');
-        setTimeout(() => pasteZone.focus(), 100);
+        linkModalTitle.textContent = `为「${activeSet.name}」添加图片链接`;
+        linkInput.value = '';
+        linkModalOverlay.classList.add('show');
+        linkInput.focus();
       }
 
-      function closePasteModal() {
-        pasteModalOverlay.classList.remove('show');
-        resetPasteModal();
+      function closeLinkModal() {
+        linkModalOverlay.classList.remove('show');
       }
 
-      pasteBtn.addEventListener('click', openPasteModal);
-      pasteCancelBtn.addEventListener('click', closePasteModal);
-      pasteModalOverlay.addEventListener('click', (e) => {
-        if (e.target === pasteModalOverlay) closePasteModal();
+      addLinkBtn.addEventListener('click', openLinkModal);
+      linkCancelBtn.addEventListener('click', closeLinkModal);
+      linkModalOverlay.addEventListener('click', (e) => {
+        if (e.target === linkModalOverlay) closeLinkModal();
       });
 
-      function handlePastedImage(file) {
-        if (!file || !file.type.startsWith('image/')) {
-          showToast('请粘贴图片文件');
-          return;
-        }
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          pendingImage = ev.target.result;
-          pasteZone.classList.add('has-image');
-          pasteZone.innerHTML = `
-            <img class="paste-preview" src="${pendingImage}" alt="预览">
-            <span class="paste-hint" style="margin-top:0.4rem;">图片已就绪</span>
-          `;
-          pasteConfirmBtn.disabled = false;
-        };
-        reader.readAsDataURL(file);
-      }
-
-      document.addEventListener('paste', (e) => {
-        if (!pasteModalOverlay.classList.contains('show')) return;
-        const items = e.clipboardData && e.clipboardData.items;
-        if (!items) return;
-        for (const item of items) {
-          if (item.type.startsWith('image/')) {
-            e.preventDefault();
-            const file = item.getAsFile();
-            if (file) handlePastedImage(file);
-            break;
-          }
-        }
-      });
-
-      pasteZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        pasteZone.style.borderColor = '#d9b8a4';
-        pasteZone.style.background = 'rgba(253, 250, 248, 0.9)';
-      });
-      pasteZone.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        pasteZone.style.borderColor = '';
-        pasteZone.style.background = '';
-      });
-      pasteZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        pasteZone.style.borderColor = '';
-        pasteZone.style.background = '';
-        const files = e.dataTransfer.files;
-        if (files.length > 0) handlePastedImage(files[0]);
-      });
-
-      pasteZone.addEventListener('click', () => pasteZone.focus());
-
-      pasteConfirmBtn.addEventListener('click', () => {
+      linkConfirmBtn.addEventListener('click', () => {
         const activeSet = getActiveSet();
         if (!activeSet) {
           showToast('请先在左侧选择一个套装');
-          closePasteModal();
+          closeLinkModal();
           return;
         }
-        if (!pendingImage) {
-          showToast('还没有粘贴图片');
+
+        const raw = linkInput.value.trim();
+        if (!raw) {
+          showToast('请输入至少一个链接');
           return;
         }
-        activeSet.images.push(pendingImage);
-        closePasteModal();
+
+        const links = raw.split('\n')
+          .map(l => l.trim())
+          .filter(l => l.length > 0);
+
+        if (links.length === 0) {
+          showToast('没有有效的链接');
+          return;
+        }
+
+        activeSet.images.push(...links);
+        closeLinkModal();
         renderSetList();
-        showToast(`已添加 1 张图片到「${activeSet.name}」`);
+        showToast(`已添加 ${links.length} 个图片链接`);
       });
 
+      linkInput.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          linkConfirmBtn.click();
+        }
+      });
+
+      // ---------- 渲染左侧列表 ----------
       function renderSetList() {
         let seriesSets = getSeriesSets();
         const keyword = searchKeyword.trim().toLowerCase();
@@ -1237,6 +1164,7 @@
         renderThumbPanel();
       }
 
+      // ---------- 渲染右侧缩略图 ----------
       function renderThumbPanel() {
         const activeSet = getActiveSet();
         if (!activeSet) {
@@ -1248,7 +1176,7 @@
         currentSetNameEl.innerHTML = `${activeSet.name} <small id="imageCount">${activeSet.images.length} 张特姿</small>`;
 
         if (activeSet.images.length === 0) {
-          thumbGridEl.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><span>📷</span>还没有图片，点击“粘贴图片”添加</div>`;
+          thumbGridEl.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><span>📷</span>还没有图片，点击“添加图片链接”添加</div>`;
           return;
         }
 
@@ -1287,6 +1215,7 @@
         });
       }
 
+      // ---------- 系列切换 ----------
       seriesTabs.forEach(tab => {
         tab.addEventListener('click', () => {
           const series = tab.dataset.series;
@@ -1299,6 +1228,7 @@
         });
       });
 
+      // ---------- 搜索 ----------
       let searchTimer = null;
       searchInput.addEventListener('input', (e) => {
         if (searchTimer) clearTimeout(searchTimer);
@@ -1310,20 +1240,35 @@
         }, 200);
       });
 
+      // ---------- 提取新增链接（带系列和套装名，排除内置） ----------
       extractBtn.addEventListener('click', () => {
-        const activeSet = getActiveSet();
-        if (!activeSet) {
-          showToast('请先选择一个套装');
+        let results = [];
+        const seriesNames = { 'six': '六星', 'five': '五星', 'blindbox': '盲盒' };
+
+        allSets.forEach(set => {
+          // 过滤掉内置的图片链接
+          const newImages = set.images.filter(url => url !== BUILT_IN_URL);
+          
+          if (newImages.length > 0) {
+            const seriesStr = seriesNames[set.series];
+            const setNameStr = set.nickname ? `${set.name}(${set.nickname})` : set.name;
+            
+            // 如果一个套装有多张新增图，每张图占一行，格式统一
+            newImages.forEach(url => {
+              results.push(`【${seriesStr}】${setNameStr}：${url}`);
+            });
+          }
+        });
+
+        if (results.length === 0) {
+          showToast('目前没有新增的图片链接（已排除内置沙漏图）');
           return;
         }
-        if (activeSet.images.length === 0) {
-          showToast(`「${activeSet.name}」还没有图片`);
-          return;
-        }
-        const links = activeSet.images;
-        const textToCopy = links.join('\n');
+
+        const textToCopy = results.join('\n');
+
         navigator.clipboard.writeText(textToCopy).then(() => {
-          showToast(`已复制「${activeSet.name}」的 ${links.length} 个图片链接`);
+          showToast(`已成功提取 ${results.length} 个新增图片链接`);
         }).catch(() => {
           const textarea = document.createElement('textarea');
           textarea.value = textToCopy;
@@ -1331,10 +1276,11 @@
           textarea.select();
           document.execCommand('copy');
           document.body.removeChild(textarea);
-          showToast(`已复制「${activeSet.name}」的 ${links.length} 个图片链接`);
+          showToast(`已成功提取 ${results.length} 个新增图片链接`);
         });
       });
 
+      // ---------- 初始化 ----------
       function init() {
         const firstSix = allSets.find(s => s.series === 'six');
         if (firstSix) activeSetId = firstSix.id;
